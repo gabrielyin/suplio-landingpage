@@ -7,6 +7,8 @@ import { useEffect, useState } from 'react'
 import { Button } from './Button'
 import Link from 'next/link'
 
+import { Menu } from '@headlessui/react'
+
 interface HeaderProps {
   openModal: () => void
 }
@@ -32,17 +34,35 @@ export function Header({ openModal }: HeaderProps) {
           <Image src={Logo} alt="Suplio logo" />
         </div>
         {/* Mobile Navigation */}
-        <nav>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            height="48"
-            viewBox="0 96 960 960"
-            width="48"
-            className="h-8 w-8 fill-[#B9DBCD] sm:hidden"
-          >
-            <path d="M120 816v-60h720v60H120Zm0-210v-60h720v60H120Zm0-210v-60h720v60H120Z" />
-          </svg>
-        </nav>
+        <Menu as="div" className="relative">
+          <Menu.Button>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="48"
+              viewBox="0 96 960 960"
+              width="48"
+              className="h-8 w-8 fill-[#B9DBCD] sm:hidden"
+            >
+              <path d="M120 816v-60h720v60H120Zm0-210v-60h720v60H120Zm0-210v-60h720v60H120Z" />
+            </svg>
+          </Menu.Button>
+          <Menu.Items className="absolute right-0 flex w-40 flex-col rounded bg-white p-2">
+            <Menu.Item>
+              <Link
+                href="https://www.instagram.com/usesuplio/"
+                target="_blank"
+                className="px-1 py-1.5"
+              >
+                Instagram
+              </Link>
+            </Menu.Item>
+            <Menu.Item>
+              <div className="px-1 py-1.5" onClick={openModal}>
+                Tenho interesse
+              </div>
+            </Menu.Item>
+          </Menu.Items>
+        </Menu>
 
         {/* Web Navigation */}
         <nav className="hidden sm:flex sm:items-center">
