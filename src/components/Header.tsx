@@ -5,8 +5,13 @@ import Image from 'next/image'
 import Logo from '../assets/logo.svg'
 import { useEffect, useState } from 'react'
 import { Button } from './Button'
+import Link from 'next/link'
 
-export function Header() {
+interface HeaderProps {
+  openModal: () => void
+}
+
+export function Header({ openModal }: HeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false)
 
   useEffect(() => {
@@ -41,10 +46,14 @@ export function Header() {
 
         {/* Web Navigation */}
         <nav className="hidden sm:flex sm:items-center">
-          <button className="rounded-md px-4 py-2 text-[#B9DBCD] transition hover:bg-[#0A0F20] hover:bg-opacity-20">
+          <Link
+            href="https://www.instagram.com/usesuplio/"
+            target="_blank"
+            className="rounded-md px-4 py-2 text-[#B9DBCD] transition hover:bg-[#0A0F20] hover:bg-opacity-20"
+          >
             Instagram
-          </button>
-          <Button text="Tenho interesse" />
+          </Link>
+          <Button text="Tenho interesse" onClick={openModal} />
         </nav>
       </div>
     </header>

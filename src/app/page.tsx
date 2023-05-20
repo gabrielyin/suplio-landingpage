@@ -1,3 +1,5 @@
+'use client'
+
 import { Header } from '../components/Header'
 import { Hero } from '../components/Hero'
 
@@ -5,17 +7,67 @@ import pedidosDashboard from '../assets/pedidos-dashboard.png'
 import Image from 'next/image'
 import { Button } from '../components/Button'
 import { Footer } from '../components/Footer'
+import { useState } from 'react'
+import Modal from 'react-modal'
+
+const customStyles = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
+    maxWidth: '450px',
+  },
+  overlay: { zIndex: 20, backgroundColor: '#0A0F20aa', margin: '0 20px' },
+}
 
 export default function Home() {
+  const [modalIsOpen, setModalIsOpen] = useState(false)
+
+  function openModal() {
+    setModalIsOpen(true)
+  }
+
+  function closeModal() {
+    setModalIsOpen(false)
+  }
+
   return (
     <main className="h-full min-h-screen bg-[#0A0F20]">
-      <Header />
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        style={customStyles}
+        contentLabel="Example Modal"
+      >
+        <h1 className="text-center text-3xl font-black leading-relaxed">
+          Email para contato
+        </h1>
+        <p className="text-center text-gray-500">
+          Entre em contato para saber mais e fique por dentro das novidades
+        </p>
+        <div className="mt-8 flex flex-col items-center gap-3">
+          <input
+            type="text"
+            placeholder="Email"
+            className="mx-auto block rounded-lg border px-2 py-1 outline-none transition focus:ring"
+            autoFocus
+          />
+          <button className="w-fit rounded-lg bg-green-500 px-6 py-2 text-white outline-none transition hover:bg-green-600 focus:ring focus:ring-green-600">
+            Enviar
+          </button>
+        </div>
+      </Modal>
+
+      <Header openModal={openModal} />
 
       <div className="absolute h-[400px] w-full bg-radial-header-gradient"></div>
 
       {/* Hero */}
       <div className="relative pb-[50px] pt-[80px]">
-        <Hero />
+        <Hero openModal={openModal} />
       </div>
 
       {/* Funcionalidades */}
@@ -193,7 +245,7 @@ export default function Home() {
           </div>
           <div className="flex items-center gap-1.5">
             <p className="text-[#DFDFDF]">Sou PME e</p>{' '}
-            <Button text="Tenho interesse" />
+            <Button text="Tenho interesse" onClick={openModal} />
           </div>
         </div>
       </div>
@@ -207,7 +259,7 @@ export default function Home() {
           <p className="mb-5 mt-2 max-w-[300px] text-center font-extralight text-[#DFDFDF] sm:mb-7 sm:mt-4">
             Tem interesse em conhecer? entre em contato para uma gestão prática
           </p>
-          <Button text="Tenho interesse" />
+          <Button text="Tenho interesse" onClick={openModal} />
         </div>
       </div>
 
