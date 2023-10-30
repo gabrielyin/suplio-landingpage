@@ -60,6 +60,7 @@ export function Footer() {
           <Link href="#" className="text-sm uppercase text-white">
             Contato
           </Link>
+          <p className="text-slate-500">2021gabrielyin@gmail.com</p>
         </div>
       </div>
     </footer>

@@ -9,6 +9,7 @@ import { Button } from '../components/Button'
 import { Footer } from '../components/Footer'
 import { useState } from 'react'
 import Modal from 'react-modal'
+import { useFormspark } from '@formspark/use-formspark'
 
 const customStyles = {
   content: {
@@ -34,6 +35,20 @@ export default function Home() {
     setModalIsOpen(false)
   }
 
+  const [submit, submitting] = useFormspark({
+    formId: 'qhhbvzNt',
+  })
+
+  const [email, setEmail] = useState('')
+
+  const onSubmit = async (e: any) => {
+    e.preventDefault()
+    await submit({ email })
+    alert('Email enviado com sucesso')
+    setModalIsOpen(false)
+    setEmail('')
+  }
+
   return (
     <main className="h-full min-h-screen bg-[#0A0F20]">
       <Modal
@@ -48,17 +63,25 @@ export default function Home() {
         <p className="text-center text-gray-500">
           Entre em contato para saber mais e fique por dentro das novidades
         </p>
-        <div className="mt-8 flex flex-col items-center gap-3">
+        <form
+          onSubmit={onSubmit}
+          className="mt-8 flex flex-col items-center gap-3"
+        >
           <input
-            type="text"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             placeholder="Email"
             className="mx-auto block rounded-lg border px-2 py-1 outline-none transition focus:ring"
             autoFocus
           />
-          <button className="w-fit rounded-lg bg-green-500 px-6 py-2 text-white outline-none transition hover:bg-green-600 focus:ring focus:ring-green-600">
+          <button
+            disabled={submitting}
+            className="w-fit rounded-lg bg-green-500 px-6 py-2 text-white outline-none transition hover:bg-green-600 focus:ring focus:ring-green-600"
+          >
             Enviar
           </button>
-        </div>
+        </form>
       </Modal>
 
       <Header openModal={openModal} />
